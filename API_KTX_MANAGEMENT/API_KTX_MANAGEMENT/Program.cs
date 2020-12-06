@@ -18,7 +18,13 @@ namespace API_KTX_MANAGEMENT
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+             WebHost.CreateDefaultBuilder(args)
+                      .UseKestrel()
+                      .UseContentRoot(Directory.GetCurrentDirectory())
+                      .UseConfiguration(new ConfigurationBuilder()
+                                            .SetBasePath(Directory.GetCurrentDirectory())
+                                            .AddJsonFile("hosting.json", optional: true)
+                                            .Build())
+                      .UseStartup<Startup>();
     }
 }
